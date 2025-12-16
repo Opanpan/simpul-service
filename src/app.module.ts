@@ -20,7 +20,7 @@ import { User } from './chat/entities/user.entity';
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_NAME || 'sumpuldb',
       entities: [Task, ConversationRead, Conversation, Message, User],
-      synchronize: true,
+      synchronize: false,
     }),
     TasksModule,
     ChatModule,
