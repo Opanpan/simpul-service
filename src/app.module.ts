@@ -21,7 +21,7 @@ import { User } from './chat/entities/user.entity';
       database: process.env.DB_NAME || 'sumpuldb',
       entities: [Task, ConversationRead, Conversation, Message, User],
       synchronize: false,
-      migrations: ['src/database/migrations/*.ts'],
+      migrations: ['dist/database/migrations/*.{js,ts}'],
       migrationsRun: true,
     }),
     TasksModule,
