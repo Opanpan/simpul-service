@@ -149,6 +149,7 @@ export class ChatService {
   }
 
   async startConversation(
+    subject: string,
     senderId: number,
     receiverId: number,
     content: string,
@@ -174,8 +175,7 @@ export class ChatService {
     }
 
     const conversation = await this.conversationRepo.save({
-      subject:
-        'Jeannette Moraima Guaman Chamba (Hutto I-589) [ Hutto Follow Up - Brief Service ]',
+      subject: subject,
       participantIds: [senderId, receiverId],
       lastMessage: content,
       lastMessageAt: new Date(),

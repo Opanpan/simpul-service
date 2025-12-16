@@ -26,6 +26,7 @@ export class ConversationController {
   @Post('start')
   startConversation(@Body() body: StartConversationDTO) {
     return this.chatService.startConversation(
+      body.subject,
       body.senderId,
       body.receiverId,
       body.content,
