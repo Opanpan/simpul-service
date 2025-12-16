@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Body,
+  Query,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { StartConversationDTO } from './dto/start-conversation.dto';
@@ -14,8 +15,11 @@ export class ConversationController {
   constructor(private readonly chatService: ChatService) {}
 
   @Get('inbox/:userId')
-  getInbox(@Param('userId', ParseIntPipe) userId: number) {
-    return this.chatService.getInbox(userId);
+  getInbox(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Query('search') search?: string,
+  ) {
+    return this.chatService.getInbox(userId, search);
   }
 
   @Get(':id/messages')

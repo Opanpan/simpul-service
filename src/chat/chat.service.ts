@@ -23,13 +23,22 @@ export class ChatService {
     private userRepo: Repository<User>,
   ) {}
 
-  async getInbox(userId: number) {
-    const conversations = await this.conversationRepo
+  async getInbox(userId: number, search?: string) {
+    const qb = this.conversationRepo
       .createQueryBuilder('c')
-      .where(":userId = ANY (string_to_array(c.participantIds, ',')::int[])", {
-        userId,
-      })
-      .orderBy('c.lastMessageAt', 'DESC')
+      .where(
+        ':userId = ANY (string_to_array(c."participantIds", \',\')::int[])',
+        { userId },
+      );
+
+    if (search && search.trim().length > 0) {
+      qb.andWhere('LOWER(c.subject) LIKE LOWER(:search)', {
+        search: `%${search.trim()}%`,
+      });
+    }
+
+    const conversations = await qb
+      .orderBy('c."lastMessageAt"', 'DESC')
       .getMany();
 
     if (!conversations.length) return [];
