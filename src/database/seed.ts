@@ -14,7 +14,7 @@ const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_NAME || 'sumpuldb',
   entities: [Task, ConversationRead, Conversation, Message, User],
-  migrations: ['src/database/migrations/*.ts'],
+  migrations: ['dist/database/migrations/*.{js,ts}'],
   synchronize: false,
   logging: true,
 });
