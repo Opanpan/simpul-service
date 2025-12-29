@@ -1,9 +1,4 @@
 import { DataSource } from 'typeorm';
-import { Task } from '../tasks/task.entity';
-import { ConversationRead } from '../chat/entities/conversation-read.entity';
-import { Conversation } from '../chat/entities/conversation.entity';
-import { Message } from '../chat/entities/message.entity';
-import { User } from '../chat/entities/user.entity';
 import { UserSeeder } from './seeds/UserSeeder';
 
 const AppDataSource = new DataSource({
