@@ -9,6 +9,7 @@ async function bootstrap() {
     methods: 'GET,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Authorization',
   });
+  console.log('DB URL =>', process.env.DATABASE_URL);
   await app.listen(process.env.PORT ?? 3003);
 }
 bootstrap();
