@@ -9,20 +9,29 @@ import { ConversationRead } from './chat/entities/conversation-read.entity';
 import { Conversation } from './chat/entities/conversation.entity';
 import { Message } from './chat/entities/message.entity';
 import { User } from './chat/entities/user.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432', 10),
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_NAME || 'sumpuldb',
-      entities: [Task, ConversationRead, Conversation, Message, User],
-      synchronize: false,
-      migrations: ['dist/database/migrations/*.{js,ts}'],
-      migrationsRun: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.get<string>('DB_HOST', 'postgres'),
+        port: config.get<number>('DB_PORT', 5432),
+        username: config.get<string>('POSTGRES_USER', 'postgres'),
+        password: config.get<string>('POSTGRES_PASSWORD', 'postgres'),
+        database: config.get<string>('POSTGRES_DB', 'simpuldb'),
+
+        entities: [Task, ConversationRead, Conversation, Message, User],
+        synchronize: false,
+
+        migrations: ['dist/database/migrations/*.{js}'],
+        migrationsRun: true,
+      }),
     }),
     TasksModule,
     ChatModule,
