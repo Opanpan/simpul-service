@@ -1,4 +1,3 @@
-import * as dotenv from 'dotenv';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -10,8 +9,6 @@ import { ConversationRead } from './chat/entities/conversation-read.entity';
 import { Conversation } from './chat/entities/conversation.entity';
 import { Message } from './chat/entities/message.entity';
 import { User } from './chat/entities/user.entity';
-
-dotenv.config();
 
 @Module({
   imports: [
